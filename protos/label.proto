@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "common.proto";
+
+service LabelGrpcService {
+  rpc GetAll (Empty) returns (stream LabelProto) {}
+  rpc GetById (LabelIdProto) returns (LabelProto) {}
+  rpc Insert (InsertLabelProto) returns (Empty) {}
+  rpc Delete (LabelIdProto) returns (Empty) {}
+}
+
+message LabelProto {
+  string id = 1;
+  string name = 2;
+  string country = 3;
+}
+
+message InsertLabelProto {
+  string name = 1;
+  string country = 2;
+}
+
+message LabelIdProto {
+  string id = 1;
+}
