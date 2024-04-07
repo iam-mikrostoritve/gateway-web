@@ -1,8 +1,11 @@
 syntax = "proto3";
 
-import "common.proto";
-import "artist.proto";
-import "label.proto";
+service ArtistGrpcService {
+  rpc GetAll (Empty) returns (stream ArtistProto) {}
+  rpc GetById (ArtistIdProto) returns (ArtistProto) {}
+  rpc Insert (InsertArtistProto) returns (Empty) {}
+  rpc Delete (ArtistIdProto) returns (Empty) {}
+}
 
 service RecordGrpcService {
     rpc GetAll (Empty) returns (stream RecordProto) {}
@@ -13,6 +16,48 @@ service RecordGrpcService {
     rpc Delete (RecordIdProto) returns (Empty) {}
 }
 
+service LabelGrpcService {
+  rpc GetAll (Empty) returns (stream LabelProto) {}
+  rpc GetById (LabelIdProto) returns (LabelProto) {}
+  rpc Insert (InsertLabelProto) returns (Empty) {}
+  rpc Delete (LabelIdProto) returns (Empty) {}
+}
+
+message Empty {}
+
+message ArtistProto {
+  string id = 1;
+  string artistName = 2;
+  string country = 3;
+  string realName = 4;
+}
+
+message InsertArtistProto {
+  string artistName = 1;
+  string country = 2;
+  string realName = 3;
+}
+
+message ArtistIdProto {
+  string id = 1;
+}
+
+message LabelProto {
+  string id = 1;
+  string name = 2;
+  string country = 3;
+}
+
+message InsertLabelProto {
+  string name = 1;
+  string country = 2;
+}
+
+message LabelIdProto {
+  string id = 1;
+}
+
+
 message RecordProto {
     string id = 1;
     string title = 2;
@@ -20,7 +65,7 @@ message RecordProto {
     string genre = 4;
     string style = 5;
     string releaseDate = 6;
-    LabelProto label = 7;
+   LabelProto label = 7;
     string country = 8;
     double price = 9;
     int32 quantity = 10;
