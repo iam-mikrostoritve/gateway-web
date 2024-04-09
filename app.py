@@ -93,6 +93,7 @@ def get_records():
     records = []
     for record in response:
         records.append(from_proto(record))
+    print(records)
     return records, 200
 
 
@@ -121,7 +122,13 @@ def create_transaction():
 
 
 def from_proto(proto) -> dict:
-    return {field.name: value for field, value in proto.ListFields()}
+    result = {}
+    for field, value in proto.ListFields():
+        if isinstance(value, proto_pb2.ArtistProto) or isinstance(value, proto_pb2.RecordProto) or isinstance(value, proto_pb2.LabelProto):
+            result[field.name] = from_proto(value)
+        else:
+            result[field.name] = value
+    return result
 
 
 if __name__ == '__main__':
