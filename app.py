@@ -15,7 +15,7 @@ app = Flask(__name__)
 cors = CORS(app)
 
 USER_SERVICE_URL = os.getenv('USER_SERVICE_URL')
-channel = grpc.insecure_channel('localhost:9000')
+channel = grpc.insecure_channel(os.getenv('INVENTORY_SERVICE_URL'))
 TRANSACTION_SERVICE_URL = os.getenv('TRANSACTION_SERVICE_URL')
 
 artist_stub = proto_pb2_grpc.ArtistGrpcServiceStub(channel)
